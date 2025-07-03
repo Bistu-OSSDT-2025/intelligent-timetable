@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能课表 - Intellectual Timetable</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="app-container" id="appContainer">
+        <!-- 头部区域 -->
+        <header class="header">
+            <div class="date-section">
+                <div class="current-date" id="currentDate">2024年1月15日</div>
+                <div class="week-info">
+                    <span class="current-week">第1周</span>
+                    <span class="current-day">星期一</span>
+                </div>
+            </div>
+            
+            <!-- 日夜模式切换按钮 -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-sun"></i>
+            </button>
+            
+            <!-- 功能按钮区域 -->
+            <div class="action-buttons">
+                <button class="action-btn add-course" id="addCourse">
+                    <i class="fas fa-plus"></i>
+                    <span>添加课程</span>
+                </button>
+                <button class="action-btn delete-course" id="deleteCourse">
+                    <i class="fas fa-trash"></i>
+                    <span>删除课程</span>
+                </button>
+                <button class="action-btn import-schedule" id="importSchedule">
+                    <i class="fas fa-upload"></i>
+                    <span>导入课表</span>
+                </button>
+                <button class="action-btn refresh" id="refresh">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>刷新</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 周切换导航 -->
+        <div class="week-navigation">
+            <button class="week-nav-btn prev-week" id="prevWeek">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="week-display" id="weekDisplay">第1周</span>
+            <button class="week-nav-btn next-week" id="nextWeek">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- 课表主体区域 -->
+        <div class="timetable-container">
+            <!-- 课表主体 -->
+            <div class="timetable-body" id="timetableBody">
+                <!-- 左上角空白区域 -->
+                <div class="time-column-header"></div>
+                
+                <!-- 表头（星期） -->
+                <div class="day-headers" id="dayHeaders">
+                    <div class="day-header">一<br><span class="date-sub">1/15</span></div>
+                    <div class="day-header">二<br><span class="date-sub">1/16</span></div>
+                    <div class="day-header">三<br><span class="date-sub">1/17</span></div>
+                    <div class="day-header">四<br><span class="date-sub">1/18</span></div>
+                    <div class="day-header">五<br><span class="date-sub">1/19</span></div>
+                    <div class="day-header">六<br><span class="date-sub">1/20</span></div>
+                    <div class="day-header">日<br><span class="date-sub">1/21</span></div>
+                </div>
+                
+                <!-- 滚动内容容器 -->
+                <div class="scroll-container">
+                    <!-- 时间列 -->
+                    <div class="time-column">
+                        <div class="time-slot">
+                            <div class="period-number">1</div>
+                            <div class="time-range">08:00<br>08:40</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">2</div>
+                            <div class="time-range">08:50<br>09:30</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">3</div>
+                            <div class="time-range">09:40<br>10:20</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">4</div>
+                            <div class="time-range">10:30<br>11:10</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">5</div>
+                            <div class="time-range">11:20<br>12:00</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">6</div>
+                            <div class="time-range">13:30<br>14:10</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">7</div>
+                            <div class="time-range">14:20<br>15:00</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">8</div>
+                            <div class="time-range">15:10<br>15:50</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">9</div>
+                            <div class="time-range">16:00<br>16:40</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">10</div>
+                            <div class="time-range">16:50<br>17:30</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">11</div>
+                            <div class="time-range">19:00<br>19:40</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">12</div>
+                            <div class="time-range">19:50<br>20:30</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">13</div>
+                            <div class="time-range">20:40<br>21:20</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="period-number">14</div>
+                            <div class="time-range">21:30<br>22:10</div>
+                        </div>
+                    </div>
+
+                    <!-- 课程网格 -->
+                    <div class="course-grid" id="courseGrid">
+                        <!-- 示例课程卡片 -->
+                        <div class="course-card math" style="grid-column: 1 / 2; grid-row: 1 / 3;" data-course-info='{"name":"高等数学","teacher":"张教授","location":"教学楼A101","weeks":"1-16周"}'>
+                            <div class="course-name">高等数学</div>
+                            <div class="course-location">教学楼A101</div>
+                            <div class="course-teacher">张教授</div>
+                        </div>
+                        
+                        <div class="course-card physics" style="grid-column: 3 / 4; grid-row: 4 / 6;" data-course-info='{"name":"大学物理","teacher":"李老师","location":"实验楼B201","weeks":"1-16周"}'>
+                            <div class="course-name">大学物理</div>
+                            <div class="course-location">实验楼B201</div>
+                            <div class="course-teacher">李老师</div>
+                        </div>
+                        
+                        <div class="course-card english" style="grid-column: 5 / 6; grid-row: 7 / 9;" data-course-info='{"name":"大学英语","teacher":"王老师","location":"外语楼C301","weeks":"1-16周"}'>
+                            <div class="course-name">大学英语</div>
+                            <div class="course-location">外语楼C301</div>
+                            <div class="course-teacher">王老师</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 设置按钮 -->
+    <button class="settings-btn" id="settingsBtn">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- 设置面板 -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h3>设置</h3>
+                <button class="close-settings" id="closeSettings">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="settings-body">
+                <div class="setting-group">
+                    <h4>主题调整</h4>
+                    <div class="setting-item">
+                        <label>主题线条颜色</label>
+                        <input type="color" id="themeColor" value="#007bff">
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h4>背景颜色调整</h4>
+                    <div class="setting-item">
+                        <label>背景图片</label>
+                        <input type="file" id="backgroundImage" accept="image/*">
+                    </div>
+                    <div class="setting-item">
+                        <label>毛玻璃强度</label>
+                        <input type="range" id="blurIntensity" min="0" max="20" value="10">
+                        <span class="range-value">10px</span>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h4>透明度调整</h4>
+                    <div class="setting-item">
+                        <label>卡片透明度</label>
+                        <input type="range" id="cardOpacity" min="0.1" max="1" step="0.1" value="0.9">
+                        <span class="range-value">90%</span>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h4>字体设置</h4>
+                    <div class="setting-item">
+                        <label>字体颜色</label>
+                        <input type="color" id="fontColor" value="#333333">
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h4>星期显示格式</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="radio" name="weekFormat" value="chinese" checked>
+                            中文（一-日）
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="radio" name="weekFormat" value="number">
+                            数字（1-7）
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="radio" name="weekFormat" value="roman">
+                            罗马数字（i-vii）
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 课程详情弹窗 -->
+    <div class="course-modal" id="courseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalCourseName">课程详情</h3>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="course-detail">
+                    <div class="detail-item">
+                        <span class="label">课程名称：</span>
+                        <span class="value" id="modalCourseNameValue"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">上课周数：</span>
+                        <span class="value" id="modalWeeks"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">节次：</span>
+                        <span class="value" id="modalPeriods"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">任课教师：</span>
+                        <span class="value" id="modalTeacher"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">上课地点：</span>
+                        <span class="value" id="modalLocation"></span>
+                    </div>
+                </div>
+                <div class="course-color-setting">
+                    <label>课程颜色：</label>
+                    <input type="color" id="courseColorPicker">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-edit" id="editCourse">编辑</button>
+                    <button class="btn-delete" id="deleteCourseFromModal">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
