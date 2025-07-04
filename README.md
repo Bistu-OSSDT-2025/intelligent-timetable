@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![智能课表系统](https://img.shields.io/badge/智能课表系统-v2.0.0-blue)
+![智能课表系统](https://img.shields.io/badge/智能课表系统-v6.0.0-blue)
 ![Python](https://img.shields.io/badge/Python-3.7+-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux%20%7C%20Android-lightgrey)
